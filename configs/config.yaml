@@ -1,0 +1,99 @@
+# Travel-Assistant Configuration (Default)
+# This is the base configuration file. Environment-specific overrides in config-{env}.yaml
+
+app:
+  name: travel-assistant
+  env: local
+  version: 1.0.0
+  debug: true
+
+server:
+  host: 0.0.0.0
+  port: 8080
+  read_timeout: 30
+  write_timeout: 30
+
+database:
+  driver: mysql
+  dsn: "root:password@tcp(127.0.0.1:3306)/travel_assistant?charset=utf8mb4&parseTime=True&loc=Local"
+  max_idle_conns: 10
+  max_open_conns: 100
+  conn_max_lifetime_sec: 3600
+  log_level: warn
+
+redis:
+  host: 127.0.0.1
+  port: 6379
+  password: ""
+  db: 0
+  pool_size: 100
+
+logger:
+  level: info
+  format: json
+  output_paths:
+    - stdout
+    - logs/app.log
+  error_output:
+    - logs/error.log
+  max_size_mb: 128
+  max_backups: 14
+  max_age_days: 7
+  compress: true
+
+doubao:
+  api_key: "${DOUBAO_API_KEY}"
+  base_url: "https://ark.cn-beijing.volces.com/api/v3"
+  model_name: doubao-pro-32k
+  max_tokens: 4096
+  temperature: 0.7
+  timeout_sec: 30
+  max_retries: 3
+
+milvus:
+  host: 127.0.0.1
+  port: 19530
+  username: ""
+  password: ""
+  database: travel_assistant
+  collection:
+    attraction_description: attraction_description_vectors
+    city_guide: city_guide_vectors
+    user_preference: user_preference_vectors
+    conversation_summary: conversation_summary_vectors
+
+file_storage:
+  provider: local
+  max_size_mb: 100
+  object_prefix: uploads
+  public_base_url: ""
+  minio:
+    endpoint: "127.0.0.1:9000"
+    access_key: "${MINIO_ACCESS_KEY}"
+    secret_key: "${MINIO_SECRET_KEY}"
+    bucket: travel-assistant
+    use_ssl: false
+  oss:
+    endpoint: ""
+    access_key_id: ""
+    access_key_secret: ""
+    bucket: ""
+  cos:
+    secret_id: ""
+    secret_key: ""
+    region: ""
+    bucket: ""
+
+services:
+  gateway:
+    name: gateway-service
+    port: 8080
+    target: 127.0.0.1:8080
+  travel:
+    name: travel-service
+    port: 9001
+    target: 127.0.0.1:9001
+  agent:
+    name: agent-service
+    port: 9002
+    target: 127.0.0.1:9002

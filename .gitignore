@@ -1,0 +1,50 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary
+*.test
+
+# Output of go coverage
+*.out
+
+# Dependency vendor (if using)
+/vendor
+
+# Go workspace file
+go.work
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Runtime directories
+logs/
+data/
+tmp/
+
+# Environment files (contain secrets)
+.env
+.env.local
+.env.*.local
+
+# Generated code (except committed)
+api/gen/
+idl/gen/
+
+# Config overrides (keep templates)
+configs/config-local.yaml
+
+# Build output
+dist/
+build/
